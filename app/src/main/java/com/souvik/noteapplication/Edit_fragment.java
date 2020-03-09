@@ -1,4 +1,4 @@
-package com.abhishek.noteapplication;
+package com.souvik.noteapplication;
 
 import android.os.Bundle;
 
