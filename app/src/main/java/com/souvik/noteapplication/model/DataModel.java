@@ -6,11 +6,13 @@ import android.graphics.Bitmap;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 
-public  class DataModel extends RealmObject {
+public  class DataModel extends RealmObject  {
 
 
     @Expose
@@ -28,6 +30,7 @@ public  class DataModel extends RealmObject {
     private String userId;
 
     private byte[] href;
+    private  String date;
 
     public DataModel(boolean completed, String title, String  id, String userId) {
         this.completed = completed;
@@ -77,5 +80,13 @@ public  class DataModel extends RealmObject {
 
     public void setHref(byte[] href) {
         this.href = href;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

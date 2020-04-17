@@ -23,10 +23,13 @@ import com.souvik.noteapplication.model.DataModel;
 import com.souvik.noteapplication.databinding.CardLayoutBinding;
 import com.souvik.noteapplication.databinding.FragmentDisplayBinding;
 
+import java.io.Serializable;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
-public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder>{
+public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder>implements Serializable {
 
 private Context mContext;
 //private ArrayList<DataModel> dataList;
@@ -59,9 +62,11 @@ public void onBindViewHolder(@NonNull final DataAdapter.MyViewHolder holder, fin
     holder.cardLayoutBinding.ids.setText("UserId: "+String.valueOf(dataList.get(position).getId()));
     holder.cardLayoutBinding.title.setText(dataList.get(position).getTitle());
     try {
-        Bitmap bmp = BitmapFactory.decodeByteArray(dataList.get(position).getHref(), 0, dataList.get(position).getHref().length);
-        holder.cardLayoutBinding.imgeview.setImageBitmap(Bitmap.createScaledBitmap(bmp, holder.cardLayoutBinding.imgeview.getWidth(),
-                holder.cardLayoutBinding.imgeview.getHeight(), false));
+        if(dataList.get(position).getHref()!=null) {
+            Bitmap bmp = BitmapFactory.decodeByteArray(dataList.get(position).getHref(), 0, dataList.get(position).getHref().length);
+            holder.cardLayoutBinding.imgeview.setImageBitmap(Bitmap.createScaledBitmap(bmp, holder.cardLayoutBinding.imgeview.getWidth(),
+                    holder.cardLayoutBinding.imgeview.getHeight(), false));
+        }
     }catch (Exception e){
         e.printStackTrace();
     }
@@ -111,7 +116,10 @@ public void onBindViewHolder(@NonNull final DataAdapter.MyViewHolder holder, fin
         return dataList.size();
     }
 
-
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
        // TextView user_id, title_text;
@@ -133,6 +141,7 @@ public void onBindViewHolder(@NonNull final DataAdapter.MyViewHolder holder, fin
         public void updateData(final boolean completed, final String id){
             result2 = realm.where(DataModel.class)
                     .equalTo("id", id)
+                    //.sort(result2.getDate(), Sort.ASCENDING)
                     .findFirstAsync();
             realm.beginTransaction();
 

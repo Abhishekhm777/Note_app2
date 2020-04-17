@@ -51,6 +51,7 @@ public class DisplayFragment extends Fragment {
         //recyclerView=(RecyclerView)view.findViewById(R.id.recyclerview) ;
         GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(),1,GridLayoutManager.VERTICAL, false);
         displayBinding.recyclerview.setLayoutManager(mLayoutManager);
+        displayBinding.recyclerview.hasFixedSize();
 
         realm= Realm.getDefaultInstance();
        // getResult = realm.where(DataModel.class).findAll();

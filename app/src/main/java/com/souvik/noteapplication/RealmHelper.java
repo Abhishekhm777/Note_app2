@@ -103,12 +103,13 @@ public class RealmHelper {
                    for (ProductModel.Content content :contentlist) {
                        DataModel dm = bgRealm.createObject(DataModel.class, content.getId());
                        dm.setTitle(content.getName());
-                       dm.setUserId(content.getId());
+                       dm.setUserId(content.getSku());
                        dm.setCompleted(content.getShowable());
+                       dm.setDate(content.getCreatedOn());
                        count=count+1;
                        if (count<6) {
-                           dm.setHref(getBitmapFromURL("https://server.mrkzevar.com/gate/b2b/catalog/api/v1/assets/image/5d8895c146e0fb0001e89f29"));
-                           Log.e("count...",count+"");
+                           dm.setHref(getBitmapFromURL("https://server.mrkzevar.com/gate/b2b/catalog/api/v1/assets/image/"+content.getImageGridFsID().get(0)));
+                           Log.e("count..."+content.getImageGridFsID().get(0),count+"");
                        }
 
 
