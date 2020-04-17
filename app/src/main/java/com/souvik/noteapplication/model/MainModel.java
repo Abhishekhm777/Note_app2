@@ -1,4 +1,4 @@
-package com.souvik.noteapplication.Model;
+package com.souvik.noteapplication.model;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -9,16 +9,16 @@ import com.souvik.noteapplication.Repository.NoteRepository;
 import java.util.ArrayList;
 
 public class MainModel extends ViewModel {
-    private MutableLiveData<ArrayList<DataModel>> mGetUser;
+    private MutableLiveData<ProductModel> mGetUser;
     private NoteRepository noteRepository;
     public void init(){
         if(mGetUser != null){
             return;
         }
         noteRepository=NoteRepository.getInstance();
-        mGetUser=noteRepository.getUserDetails();
+        mGetUser=noteRepository.getProductDetails();
     }
-    public LiveData<ArrayList<DataModel>> getData(){
+    public LiveData<ProductModel> getData(){
         return mGetUser;
     }
 }

@@ -1,10 +1,14 @@
-package com.souvik.noteapplication.Model;
+package com.souvik.noteapplication.model;
 
+
+import android.graphics.Bitmap;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 
 public  class DataModel extends RealmObject {
 
@@ -15,12 +19,25 @@ public  class DataModel extends RealmObject {
     @Expose
     @SerializedName("title")
     private String title;
+    @PrimaryKey
     @Expose
     @SerializedName("id")
-    private int id;
+    private String id;
     @Expose
     @SerializedName("userId")
-    private int userId;
+    private String userId;
+
+    private byte[] href;
+
+    public DataModel(boolean completed, String title, String  id, String userId) {
+        this.completed = completed;
+        this.title = title;
+        this.id = id;
+        this.userId = userId;
+    }
+
+    public DataModel() {
+    }
 
     public boolean getCompleted() {
         return completed;
@@ -38,29 +55,27 @@ public  class DataModel extends RealmObject {
         this.title = title;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    @Override
-    public String toString() {
-        return "DataModel{" +
-                "completed=" + completed +
-                ", title='" + title + '\'' +
-                ", id=" + id +
-                ", userId=" + userId +
-                '}';
+    public byte[] getHref() {
+        return href;
+    }
+
+    public void setHref(byte[] href) {
+        this.href = href;
     }
 }
