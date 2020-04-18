@@ -29,7 +29,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
-public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder>implements Serializable {
+public class DataAdapter extends RecyclerView.Adapter<DataAdapter.MyViewHolder> {
 
 private Context mContext;
 //private ArrayList<DataModel> dataList;
@@ -61,15 +61,16 @@ public void onBindViewHolder(@NonNull final DataAdapter.MyViewHolder holder, fin
     holder.cardLayoutBinding.setDataModel(dataModel);
     holder.cardLayoutBinding.ids.setText("UserId: "+String.valueOf(dataList.get(position).getId()));
     holder.cardLayoutBinding.title.setText(dataList.get(position).getTitle());
-    try {
+   /* try {
         if(dataList.get(position).getHref()!=null) {
             Bitmap bmp = BitmapFactory.decodeByteArray(dataList.get(position).getHref(), 0, dataList.get(position).getHref().length);
-            holder.cardLayoutBinding.imgeview.setImageBitmap(Bitmap.createScaledBitmap(bmp, holder.cardLayoutBinding.imgeview.getWidth(),
-                    holder.cardLayoutBinding.imgeview.getHeight(), false));
+            *//*holder.cardLayoutBinding.imgeview.setImageBitmap(Bitmap.createScaledBitmap(bmp, holder.cardLayoutBinding.imgeview.getWidth(),
+                    holder.cardLayoutBinding.imgeview.getHeight(), false));*//*
+            holder.cardLayoutBinding.imgeview.setImageBitmap(bmp);
         }
     }catch (Exception e){
         e.printStackTrace();
-    }
+    }*/
 
     if(dataList.get(position).getCompleted()==true){
         holder.cardLayoutBinding.checkBox.setChecked(true);
@@ -120,6 +121,12 @@ public void onBindViewHolder(@NonNull final DataAdapter.MyViewHolder holder, fin
     public int getItemViewType(int position) {
         return position;
     }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
        // TextView user_id, title_text;
