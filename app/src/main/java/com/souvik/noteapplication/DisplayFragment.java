@@ -1,5 +1,7 @@
 package com.souvik.noteapplication;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -8,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +38,12 @@ public class DisplayFragment extends Fragment {
    //public static TextView textView;
    private RealmResults<DataModel> getResult;
     FragmentDisplayBinding displayBinding;
+
+    // Progress Dialog
+    private ProgressDialog pDialog;
+
+    // Progress dialog type (0 - for Horizontal progress bar)
+    public static final int progress_bar_type = 0;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -45,16 +54,41 @@ public class DisplayFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         displayBinding=FragmentDisplayBinding.inflate(inflater,container,false);
+        displayBinding.downloadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startDownload();
+            }
+        });
 
-        //View view=inflater.inflate(R.layout.fragment_display, container, false);
-       // textView=view.findViewById(R.id.count);
-        //recyclerView=(RecyclerView)view.findViewById(R.id.recyclerview) ;
         GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(),1,GridLayoutManager.VERTICAL, false);
         displayBinding.recyclerview.setLayoutManager(mLayoutManager);
         displayBinding.recyclerview.hasFixedSize();
 
+
+
+        return displayBinding.getRoot();
+    }
+
+   /* @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case progress_bar_type: // we set this to 0
+                pDialog = new ProgressDialog(getContext());
+                pDialog.setMessage("Downloading file. Please wait...");
+                pDialog.setIndeterminate(false);
+                pDialog.setMax(100);
+                pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                pDialog.setCancelable(true);
+                pDialog.show();
+                return pDialog;
+            default:
+                return null;
+        }
+    }*/
+    private  void startDownload(){
         realm= Realm.getDefaultInstance();
-       // getResult = realm.where(DataModel.class).findAll();
+        // getResult = realm.where(DataModel.class).findAll();
 
         helper=new RealmHelper(realm);
         mainViewModel= ViewModelProviders.of(getActivity()).get(MainModel.class);
@@ -65,10 +99,10 @@ public class DisplayFragment extends Fragment {
                 if(dataModels==null){
 
                     getResult = realm.where(DataModel.class).findAll();
+                    Log.e("called",getResult.size()+"");
 
-                        dataAdapter = new DataAdapter(getActivity(), getResult, getFragmentManager(),displayBinding);
-                        displayBinding.recyclerview.setAdapter(dataAdapter);
-
+                    dataAdapter = new DataAdapter(getActivity(), getResult, getFragmentManager(),displayBinding);
+                    displayBinding.recyclerview.setAdapter(dataAdapter);
 
 
 
@@ -76,15 +110,13 @@ public class DisplayFragment extends Fragment {
                 }
                 else {
                     dataAdapter.notifyDataSetChanged();
+                    Log.e("updated",getResult.size()+"");
                 }
                 countCheck();
 
             }
         });
 
-
-
-        return displayBinding.getRoot();
     }
 
     private void countCheck(){
@@ -103,6 +135,8 @@ public class DisplayFragment extends Fragment {
             dataAdapter.notifyDataSetChanged();
         }
     }
+
+
 
 
 

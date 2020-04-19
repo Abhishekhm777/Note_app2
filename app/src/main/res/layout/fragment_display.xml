@@ -6,13 +6,20 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/download_btn"
+        android:text="Download"
+/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/count"
         android:layout_marginLeft="10dp"
+        android:layout_below="@+id/download_btn"
         android:text="Fav count:"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         ></TextView>
     <androidx.recyclerview.widget.RecyclerView

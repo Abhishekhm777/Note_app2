@@ -97,18 +97,18 @@ public class RealmHelper {
    ///////////////////////////////////////////////write into DB/////////////////////////////////////////////////
    public void writeToDB(final ProductModel productModel, final MutableLiveData<ProductModel>data) {
        try {
-
+          final List<ProductModel.Content> contentlist=productModel.getProducts().getContent();
+           Log.e("product name..",productModel.getProducts().toString());
 
            realm.executeTransactionAsync(new Realm.Transaction() {
                @Override
                public void execute(Realm bgRealm) {
-                   List<ProductModel.Content> contentlist=productModel.getProducts().getContent();
-                   Log.e("product name..",productModel.getProducts().toString());
+
                   // int count=1;
                  //  for (ProductModel.Content content :contentlist) {
                    GetBitmapFromURL getBitmapFromURL=new GetBitmapFromURL();
 
-                   for(int i=0;i<20;i++){
+                   for(int i=0;i<50;i++){
                        ProductModel.Content content =contentlist.get(i);
                        DataModel dm = bgRealm.createObject(DataModel.class, content.getId());
                        dm.setTitle(content.getName());
@@ -119,6 +119,8 @@ public class RealmHelper {
                           if(content.getImageGridFsID().size()!=0) {
                               dm.setHref( getBitmapFromURL.doInBackground("https://server.mrkzevar.com/gate/b2b/catalog/api/v1/assets/image/" + content.getImageGridFsID().get(0)));
                               //dm.setHref(getBitmapFromURL("https://server.mrkzevar.com/gate/b2b/catalog/api/v1/assets/image/" + content.getImageGridFsID().get(0)));
+
+
 
                               Log.e("count..." + content.getImageGridFsID().get(0), i + "");
                           }
@@ -139,7 +141,6 @@ public class RealmHelper {
            }, new Realm.Transaction.OnError() {
                @Override
                public void onError(Throwable error) {
-
 
                    // Transaction failed and was automatically canceled.
                    Log.e("Transaction error", error.getMessage());
