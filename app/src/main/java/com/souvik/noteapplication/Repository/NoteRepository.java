@@ -57,7 +57,7 @@ public class NoteRepository {
     public void getProduct() {
 
         UrlCall retrofitCall = Api_instance.getProductrDetails();
-        Call<ProductModel> proInfo = retrofitCall.productInfo("bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODczNjE4MTUsInVzZXJfbmFtZSI6ImFrYXNoMUBnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6WyJST0xFX1dIT0xFU0FMRVIiXSwianRpIjoiZjg1MzUyMWYtMDA5OC00Y2I3LTg1ZGEtY2JjZDg2YmNjNDYzIiwiY2xpZW50X2lkIjoib3Jkb2Z5LXdlYiIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdfQ.Wn79rhmvAlXuX3on54Vv2SiuNhxHa2rxMPPTVqEQDEKgfrEd-S6ABZJ_oedIPvciT1FRua0hIFCjmU609RwCdtw9XfPFW5jIQTuULcH0R8aQtfJNJ8UawCPNj89itpiGHfBckvz7iQSVcZeGyB2Nkr07tXrNdOTXRUONSG6ODcLiwNQ9UdLxcLQs-4orrpraefzNG1Hwq-UScEmx6e0bv-UIn-Vm0aXSxHM18mQoyw1Wlc8MeY5evYh8r7AHOT3GgzDvY7fmYkStj7Kjc_t-DBllJu0pqTHc7IwsO8aVzk8v4ZpXELA14KewnaQs87_MDfgsNezo3tgJ-H8pZIS_gA");
+        Call<ProductModel> proInfo = retrofitCall.productInfo("bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODc0NTEzODgsInVzZXJfbmFtZSI6ImFrYXNoMUBnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6WyJST0xFX1dIT0xFU0FMRVIiXSwianRpIjoiODNjOTNjNWItM2MxMy00MjY0LWE1Y2YtZTg5YzYwMzA2MWNiIiwiY2xpZW50X2lkIjoib3Jkb2Z5LXdlYiIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdfQ.eQdRJofAC537MCH-u4F0bDfVM0gPsBX0HeUK2VoLpPE9hFOzAZyWQGIVsUBzY7ofmTPSWwaSkEgbDdCyrYrqYC0DFDgdMWBdmLZgv53uPuMr-DyxDKHwZUkPf3ifgL7JGXFFSNVFAiYJ8tT-5Xn64IgwHHyDUUPrsdbotivCkdI87d1G-neHI47dZPlKRtnNTuxUCQwdLFSMdoloLj96lS9DbjPxZIREPb9i2I5KhWyKz4AsK6OwmDqtCI8kMTtnTKmMecWJFd1t_dXtr4-Hp50RHwNy5UJNkKVBLWs5PI6_ATDmQnc-wS8KqQo9gtscImk1P09NDnRM7IpMU4knbg");
         proInfo.enqueue(new Callback<ProductModel>() {
             @Override
             public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {

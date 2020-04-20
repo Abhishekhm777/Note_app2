@@ -3,12 +3,14 @@ package com.souvik.noteapplication;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,7 +25,10 @@ import com.souvik.noteapplication.model.DataModel;
 import com.souvik.noteapplication.databinding.CardLayoutBinding;
 import com.souvik.noteapplication.databinding.FragmentDisplayBinding;
 
+import java.io.InputStream;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -61,6 +66,9 @@ public void onBindViewHolder(@NonNull final DataAdapter.MyViewHolder holder, fin
     holder.cardLayoutBinding.setDataModel(dataModel);
     holder.cardLayoutBinding.ids.setText("UserId: "+String.valueOf(dataList.get(position).getId()));
     holder.cardLayoutBinding.title.setText(dataList.get(position).getTitle());
+   /* if(dataList.get(position).getHref()!=null) {
+        new ImageLoadTask(dataList.get(position).getHref(), holder).execute();
+    }*/
    /* try {
         if(dataList.get(position).getHref()!=null) {
             Bitmap bmp = BitmapFactory.decodeByteArray(dataList.get(position).getHref(), 0, dataList.get(position).getHref().length);
@@ -163,6 +171,50 @@ public void onBindViewHolder(@NonNull final DataAdapter.MyViewHolder holder, fin
           //Log.e("data id",id+"");
 
         }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////added newwly///////////////////////////////////////////////////////////////////
+    public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
+
+        private byte[] bytecode;
+        private DataAdapter.MyViewHolder holder;
+
+        public ImageLoadTask(byte[] bytecode, DataAdapter.MyViewHolder holder) {
+            this.bytecode = bytecode;
+            this.holder=holder;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+            try {
+               /* URL urlConnection = new URL(url);
+                HttpURLConnection connection = (HttpURLConnection) urlConnection
+                        .openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);*/
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytecode, 0, bytecode.length);
+                Log.d("bitmap..",bmp.toString());
+                return bmp;
+            } catch (Exception e) {
+
+                e.printStackTrace();
+                return null;
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bmp) {
+            super.onPostExecute(bmp);
+           // imageView.setImageBitmap(Bitmap.createScaledBitmap(result,imageView.getWidth(),imageView.getHeight(),false));
+          /* holder.cardLayoutBinding.imgeview.setImageBitmap(Bitmap.createScaledBitmap(bmp,holder.cardLayoutBinding.imgeview.getWidth(),
+                    holder.cardLayoutBinding.imgeview.getHeight(), false));*/
+            holder.cardLayoutBinding.imgeview.setImageBitmap(bmp);
+        }
+
     }
 
 }
